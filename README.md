@@ -37,7 +37,7 @@ This is a React and Node.js application that displays the top 10 SL bus lines ba
    ```javascript
 const response = await axios.get("https://sl-top-bus-5ae71ac43dba.herokuapp.com/${lineNumber}/${direction}");
 ```
-	With the local urls:
+With the local urls:
 	
   ```javascript
  const response = await axios.get("http://localhost:3002/top-bus-lines");
