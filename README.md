@@ -1,72 +1,85 @@
-# Getting Started with Create React App
+# SL Bus Lines App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React and Node.js application that displays the top 10 SL bus lines based on their stops. The frontend fetches data from the backend, which in turn queries the SL API.
 
-## Available Scripts
+## Running the App Locally
 
-In the project directory, you can run:
+### Prerequisites
 
-### `npm start`
+- Node.js and npm
+- A `.env` file with the necessary API key (`API_STOPSTWO`)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Setup and Configuration
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Clone the repository**:
 
-### `npm test`
+   ```bash
+   git clone <your-repository-url>
+   cd <your-repository-directory>
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Install the dependencies**:
 
-### `npm run build`
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Update API calls in `App.js`**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   Replace the production API URLs:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  ```javascript
+ const response = await axios.get("https://sl-top-bus-5ae71ac43dba.herokuapp.com/top-bus-lines");
+```
 
-### `npm run eject`
+   and:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```javascript
+const response = await axios.get("https://sl-top-bus-5ae71ac43dba.herokuapp.com/${lineNumber}/${direction}");
+```
+	With the local urls:
+	
+  ```javascript
+ const response = await axios.get("http://localhost:3002/top-bus-lines");
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   and:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  ```javascript
+ const response = await axios.get(`http://localhost:3002/${lineNumber}/${direction}`);
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Update CORS settings in server.js**:
 
-## Learn More
+Change:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```javascript
+cors({
+    origin: "https://sbab-sl-buses.surge.sh",
+})
+```
+to: 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```javascript
+cors({
+    origin: "http://localhost:3000", // Assuming React app is running on port 3000
+})
+```
 
-### Code Splitting
+5. **Run the backend server**:
+    ```bash
+   node server.js
+   ```
+6. **Run the React app:**
+In a new terminal window, and within the project directory, run:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm start
+```
 
-### Analyzing the Bundle Size
+### Notes
+Ensure you have your .env file set up in the root of the project (or where necessary) with your API key:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# sl-live-map
-# SlApi
+```
+API_STOPSTWO=your_api_key_here
+```
